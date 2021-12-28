@@ -43,9 +43,6 @@
                 <div class="swiper-button-prev text-primary"></div>
             </div>
 
-            <span class="my-6 flex justify-center">
-                <router-link to="/CreationRecette" class="btn-primary">Proposez votre recette !</router-link>
-            </span>
         </section>
         <section id="category" class="my-8 border-t-4 border-secondary pt-4">
             <h2 class="text-center">Catégories</h2>

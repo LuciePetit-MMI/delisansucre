@@ -3,7 +3,6 @@
     <main class="w-10/12 mx-auto mt-40 mb-10 laptop:mt-28 desktop:w-8/12">
         <section id="showcase" class="mt-8">
             <h1 class="mb-4">{{recette.nom}}</h1>
-            <p class="font-fira font-bold text-black text-center">Par <span class="text-dark">{{recette.auteur}}</span></p>
             <div>
                 <div class="w-full h-60 laptop:h-80 overflow-hidden flex justify-center align-center">
                     <img :src="recette.urlImage" alt="image recette" class="w-full h-fit">
@@ -36,7 +35,7 @@
                     <ul class="grid grid-cols-2 gap-2 w-9/12 font-overpass font-regular">
                         <li v-for="composition in recette.composition" :key="composition.id" class="text-black">{{composition.quantite}} {{composition.unite}} <span v-for="ingredient in composition.ingredient" :key="ingredient.id"> {{ingredient.nom}}</span></li>
                     </ul>
-                    <p class="font-overpass font-thin flex justify-center items-center mx-auto my-4"><i class="fas fa-plus-circle px-2 text-primary"></i>Ajouter à la liste de course</p>
+                    <p @click="listeCourse()" class="cursor-pointer font-overpass font-thin flex justify-center items-center mx-auto my-4"><i class="fas fa-plus-circle px-2 text-primary"></i>Ajouter à la liste de course</p>
                 </div>
                 <div class="laptop:border-l-2 laptop:border-secondary laptop:pl-4">
                     <div>
@@ -48,10 +47,19 @@
                         </div>
                     </div>
                     <div class="font-overpass font-regular">
-                        <p>Insuline nécessaire : taux</p>    
-                        <p>Glucide : taux</p>
-                        <p>Lactose : taux</p>
-                        <p>Gluten : taux</p>
+                        <div class="border-b-2 border-primary w-fit mb-4">
+                            <label for="">Votre ratio insuline :</label>
+                            <input type="text" :placeholder="ratio" v-model="ratio" @change="calculInsuline()" class="w-10">
+                        </div>
+                        <p>Insuline nécessaire : {{insuline}} unité</p>    
+                        <div class="grid grid-cols-2">
+                            <p>Glucide : {{recette.glucide}} g</p>
+                            <p>Lactose : {{recette.lactose}} g</p>
+                            <p>Fibre : {{recette.fibre}} g</p>
+                            <p>Protéine : {{recette.proteine}} g</p>
+                            <p>Lipide : {{recette.lipide}} g</p>
+                        </div>
+                        <p class="text-sm">*Ces valeurs peuvent changer en fonction des ingrédients / marques que vous utilisez. </p>
                     </div>
                 </div>    
             </div>
@@ -59,34 +67,12 @@
         <section id="steps" class="my-8">
             <h2 class="border-dark border-b-2 w-32">Étapes</h2>
             <div  v-for="realisation in recette.realisation" :key="realisation.id" class="tablet:w-9/12 m-auto">
-                <div  v-for="etape in realisation.etape" :key="etape.id" class="flex flex-col my-4 tablet:flex-row tablet:items-center">
+                <div class="flex flex-col my-4 tablet:flex-row tablet:items-center">
                     <p class="bg-light rounded-full w-auto h-auto px-8 py-6 flex items-center justify-center font-fira font-black text-2xl text-dark self-center mb-2 tablet:mr-8">{{realisation.numero}}</p>
-                    <p class="font-overpass font-regular">{{etape.description}}</p>
+                    <p class="font-overpass font-regular">{{realisation.etape}}</p>
                 </div>
             </div>
         </section>
-        <section id="opinions" class="my-8">
-            <h2 class="border-dark border-b-2 w-32">Vos avis</h2>
-            <div class="tablet:w-9/12 laptop:w-7/12 m-auto">
-                <form @submit.prevent="creer" enctype="multipart/form-data" class="flex flex-col">
-                    <input type="text" hidden :value="recette.id">
-                    <input type="text" placeholder="Donnez votre avis sur cette recette" class="border-secondary border-2 rounded-lg w-full font-overpass font-light p-2 text-center my-2 h-20">
-                    <input type="submit" class="btn-primary" value="Valider">
-                </form>
-                <div>
-                    <div v-for="commentaire in recette.commentaire" :key="commentaire.id" class="flex items-start my-4">
-                        <div class="flex flex-col justify-center mr-4">            
-                            <img :src="commentaire.imageUtilisateur" alt="Image profil" class="rounded-full w-20">
-                            <p class="mt-2">{{commentaire.pseudoUtilisateur}}</p>
-                        </div>
-                        <p>{{commentaire.message}}</p>
-                    </div> 
-                    <div v-if="recette.commentaire.length == []">
-                        <p class="my-6 text-center text-lg"><span class="text-dark font-bold">Oups, pas encore d'avis...</span> Soyez le premier à donner votre avis sur cette recette !</p>
-                    </div>              
-                </div>
-            </div>
-        </section>    
     </main>
 
   </div>
@@ -94,12 +80,15 @@
 
 <script>
 import param from '@/param/param'
+import jsPDF from "jspdf"
 
 export default {
   name: 'Recette',
   data () {
     return {
       recette: {},
+      ratio: 0.1,
+      insuline: 0,
     }
   },
   created() {
@@ -110,24 +99,25 @@ export default {
         this.recette = response.data;
     })
   },
-  method:{
-        creer: function(){
-            axios({
-                method: 'post',
-                url: param.auth+'token',
-                data:{
-                    'username' : param.user,
-                    'password' : param.psw
-                },
-            }).then(function(response){
-                      
-            }.bind(this))
-            .catch(error => {
-                console.log("ERREUR Authorisation token");
-                console.log(error)
-            })
-        }
-  }
+  computed:{
+//calcul de la quantité d'insuline en fonction du ratio de la personne
+      calculInsuline: function(){
+          let quantite_insuline;
+          quantite_insuline = this.recette.glucide*this.ratio;
+          this.insuline = quantite_insuline.toFixed(2);
+      }
+  },
+  methods:{
+//génération de la liste de course
+        listeCourse: function(){
+            const doc = new jsPDF();
+            var nomRec = this.recette.nom; 
+            var liste = this.recette.course;
+
+            doc.text(liste, 10, 10);
+            doc.save(nomRec+".pdf"); 
+        },
+  },
 }
         
 </script>

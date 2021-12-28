@@ -2,9 +2,6 @@
   <div>
         <main class="w-10/12 mx-auto mt-40 mb-10 laptop:mt-28 desktop:w-8/12">
             <h1>Recettes</h1>
-            <span class="my-6 flex justify-center">
-                <router-link to="/CreationRecette" class="btn-primary">Proposez votre recette !</router-link>
-            </span>
             <section id="filters" class="mb-4">
                 <h2 class="border-b-dark border-b-2 w-32">Filtres</h2>
                 <div id="diet" class="text-center">

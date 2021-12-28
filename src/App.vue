@@ -1,5 +1,6 @@
 <template>
-  <div id="app" class="bg-white">
+  <div id="app" class="bg-white relative">
+<!--Menu navigation-->
     <header id="menu" class="relative z-50">
         <div class="laptop:flex flex-col laptop:flex-row laptop:justify-center w-full left-0 top-0 fixed laptop:bg-primary">
             <div class="flex flex-col w-full laptop:w-10/12 laptop:h-20 laptop:flex-row laptop:justify-between laptop:items-center text-gray-700 bg-white" x-data="{ open: false }"  :class="{'h-screen': open, 'h-auto': !open}">
@@ -16,66 +17,44 @@
     
               <nav :class="{'block': open, 'hidden': !open}" class="flex flex-col flex-grow bg-primary laptop:flex laptop:flex-row laptop:h-full laptop:justify-evenly laptop:items-center laptop:w-full">
                 
-                <div :class="{'h-auto': !open_recettes, 'h-full': open_recettes}">
-                  <button @click="open_recettes = !open_recettes" class="py-7 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
-                    <span class="text-xl" >Recettes</span>
-                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_recettes, 'rotate-0': !open_recettes}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                <div :class="{'h-auto mb-0': !open_categories, 'h-fit mb-6 laptop:mb-0': open_categories}">
+                  <button @click="open_categories = !open_categories" class="py-6 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
+                    <span class="text-xl" >Catégories</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_categories, 'rotate-0': !open_categories}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                   </button>
-                  <div :class="{'hidden': !open_recettes, 'absolute': open_recettes}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full origin-top-right laptop:w-48 laptop:left-0">
-                    <div class="bg-primary laptop:w-screen laptop:py-8 laptop:h-80 laptop:bg-white">
-                        <ul class="flex flex-col items-start laptop:flex-row laptop:justify-center laptop:items-center laptop:w-full laptop:h-full">
-                            <div class="px-8 flex flex-col laptop:items-start laptop:w-1/3 laptop:px-4">
-                                <p class="mb-6 text-white text-xl laptop:text-dark">Des recettes adaptées pour tous les goûts</p>
-                                <router-link to="/Recettes" class="uppercase text-black"><span @click="recherche=false, open=false">Voir toutes les recettes <i class="fas fa-arrow-right pl-2"></i></span></router-link>
-                                <span class="my-6 flex">
-                                    <router-link to="/CreationRecette" class="btn-primary"><span @click="recherche=false, open=false">Proposez votre recette !</span></router-link>
-                                </span>
-                            </div>
-    
-    
-                            <div class="relative laptop:px-4 laptop:flex laptop:justify-center laptop:items-start laptop:border-secondary laptop:border-l-2 laptop:border-r-2 laptop:w-1/5 laptop:h-full" :class="{'h-auto': !open_categories, 'h-60': open_categories}">
-                                <button @click="open_categories = !open_categories" class="text-white py-2 uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:m-0 laptop:px-0">
-                                    <span class="text-white laptop:text-black text-lg">Catégories</span>
-                                    <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open_categories, 'rotate-0': !open_categories}" class="inline w-6 h-6 transition-transform duration-200 transform laptop:hidden"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                                </button>    
-                                <div :class="{'hidden': !open_categories, 'absolute': open_categories}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute w-full top-8 origin-top-right laptop:w-48 laptop:important-block">
-                                    <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
-                                        <li v-if="categorie.regime" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><div @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</div></router-link></li>
-                                    </ul>
-                                </div>
-                            </div> 
-    
-                            <div class="relative laptop:px-4 laptop:flex laptop:justify-center laptop:items-start laptop:w-1/5 laptop:h-full" :class="{'h-auto': !open_meals, 'h-56': open_meals}">
-                                <button @click="open_meals = !open_meals" class="text-white py-2 uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:m-0 laptop:px-0">
-                                    <span class="text-white laptop:text-black text-lg">Repas</span>
-                                    <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open_meals, 'rotate-0': !open_meals}" class="inline w-6 h-6 transition-transform duration-200 transform laptop:hidden"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                                </button>    
-                                <div :class="{'hidden': !open_meals, 'absolute': open_meals}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute w-full top-8 origin-top-right laptop:w-48 laptop:important-block">
-                                    <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
-                                        <li v-if="categorie.repas" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><span @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</span></router-link></li>
-                                    </ul>
-                                </div>
-                            </div> 
-    
-                            <div class="relative laptop:px-4 laptop:flex laptop:justify-center laptop:items-start laptop:border-secondary laptop:border-l-2 laptop:border-r-2 laptop:w-1/5 laptop:h-full" :class="{'h-auto': !open_plates, 'h-56': open_plates}">
-                                <button @click="open_plates = !open_plates" class="text-white py-2 uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:m-0 laptop:px-0">
-                                    <span class="text-white laptop:text-black text-lg">Plats</span>
-                                    <svg fill="white" viewBox="0 0 20 20" :class="{'rotate-180': open_plates, 'rotate-0': !open_plates}" class="inline w-6 h-6 transition-transform duration-200 transform laptop:hidden"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>  
-                                </button>    
-                                <div :class="{'hidden': !open_plates, 'absolute': open_plates}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="absolute w-full top-8 origin-top-right laptop:w-48 laptop:important-block">
-                                    <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
-                                        <li v-if="categorie.plat" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><span @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</span></router-link></li>
-                                    </ul>
-                                </div>
-                            </div> 
-                        </ul>
-                    </div>
+                  
+                  <div :class="{'hidden': !open_categories, 'laptop:important-block': open_categories}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
+                    <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
+                        <li v-if="categorie.regime" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><div @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</div></router-link></li>
+                    </ul>
                   </div>
                 </div>
-    
-                <router-link to="/Menu" class="text-xl border-t-2 border-white py-9 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span @click="recherche=false, open=false">Menu de la semaine</span></router-link>
-                <router-link to="/Articles" class="text-xl border-t-2 border-white py-9 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span @click="recherche=false, open=false">Article</span></router-link>
-                <router-link to="/Compte" class="text-xl border-t-2 border-b-2 border-white py-9 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span @click="recherche=false, open=false">Profil</span></router-link>
+                <div :class="{'h-auto mb-0': !open_meals, 'h-fit mb-6 laptop:mb-0': open_meals}">
+                  <button @click="open_meals = !open_meals" class="py-6 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
+                    <span class="text-xl" >Repas</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_meals, 'rotate-0': !open_meals}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  </button>
+                  
+                  <div :class="{'hidden': !open_meals, 'laptop:important-block': open_meals}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
+                    <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
+                        <li v-if="categorie.repas" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><span @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</span></router-link></li>
+                    </ul>
+                  </div>
+                </div>
+                <div :class="{'h-auto mb-0': !open_plates, 'h-fit mb-6 laptop:mb-0': open_plates}">
+                  <button @click="open_plates = !open_plates" class="py-6 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
+                    <span class="text-xl" >Plats</span>
+                    <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_plates, 'rotate-0': !open_plates}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                  </button>
+                  
+                  <div :class="{'hidden': !open_plates, 'laptop:important-block': open_plates}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
+                    <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
+                        <li v-if="categorie.plat" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><span @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</span></router-link></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <router-link to="/Articles" class="text-xl border-t-2 border-white py-6 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span @click="recherche=false, open=false">Article</span></router-link>
               </nav>
               <form :class="{'hidden': open, 'flex': !open}" class="mx-auto my-4 w-9/12  laptop:bg-primary laptop:h-full laptop:w-5/12 laptop:flex laptop:m-0 laptop:py-4">
                 <div class="flex w-full bg-white border-primary border-2 rounded-full px-4 py-2 text-dark">
@@ -84,8 +63,9 @@
                 </div>
               </form>        
             </div>
-        </div>    
+        </div>
     </header>
+<!--Section recherches-->
     <section id="recherche" v-show="recherche" class="w-10/12 mx-auto mt-40 mb-10 laptop:mt-28 desktop:w-8/12">
         <div id="filters" class="mb-4">          
             <h2 class="border-b-dark border-b-2 w-32">Filtres</h2>
@@ -124,6 +104,8 @@
         </div>
     </section>
     <router-view v-show="recherche==false" :key="$route.fullPath"/>
+
+<!--Footer-->
     <footer id="footer" class="relative bg-light px-8 py-4 desktop:w-10/12 m-auto">
         <div class="mt-5">
             <img src="../src/assets/logo_typo_noir.svg" alt="" class="w-60">
@@ -134,19 +116,19 @@
                 <h4 class="font-fira font-black text-dark uppercase text-xl text-center mb-2">Navigation</h4>
                 <ul>
                     <li>
-                        <router-link to="/Recettes" class="font-overpass font-light">Recettes</router-link>
+                        <router-link to="/Categories" class="font-overpass font-light">Catégories</router-link>
                     </li>
                     <li>
-                        <router-link to="/Menu" class="font-overpass font-light">Menu de la semaine</router-link>
+                        <router-link to="/Repas" class="font-overpass font-light">Repas</router-link>
+                    </li>
+                    <li>
+                        <router-link to="/Plats" class="font-overpass font-light">Plats</router-link>
                     </li>
                     <li>
                         <router-link to="/Articles" class="font-overpass font-light">Articles</router-link>
                     </li>
                     <li>
                         <router-link to="/Contact" class="font-overpass font-light">Contact</router-link>
-                    </li>
-                    <li>
-                        <router-link to="/Compte" class="font-overpass font-light">Profil</router-link>
                     </li>
                 </ul>
             </div>
@@ -196,6 +178,7 @@
         </div>
         <img src="./assets/fruits.png" alt="" class="absolute bottom-0 right-0 opacity-60 w-[200vw] tablet:w-full">
     </footer>
+    </div>
   </div>
 </template>
 
@@ -219,6 +202,15 @@ export default {
         filtreRegime:0,
         searchKey: '',
         filtreCategorie: 0,
+
+        connexion: false,
+        utilisateur:{
+            username: null,
+            password: null,
+            token: null,
+            role: null,
+        },
+        message: null,
       }
   },
   created(){
@@ -235,7 +227,7 @@ export default {
   },
     methods:{
 //filtrer par regime
-      filtreParRegime: function(listeRecettes){
+    filtreParRegime: function(listeRecettes){
             // On applique le filtrage seulement
             // Si une catégorie est sélectionnée
             if(this.filtreRegime >0){
@@ -251,9 +243,9 @@ export default {
             }else{
                 return listeRecettes
             }
-        },
+    },
 //filtrer par categorie
-      filtreParCategorie: function(listeRecettes){
+    filtreParCategorie: function(listeRecettes){
             // On applique le filtrage seulement
             // Si une catégorie est sélectionnée
             if(this.filtreCategorie >0){
@@ -269,14 +261,14 @@ export default {
             }else{
                 return listeRecettes
             }
-        },
+    },
   },
   computed:{
-        listeRecettesFiltree: function(){
-            return this.filtreParRegime((this.filtreParCategorie(this.listeRecettes.filter((recette) => {
-                return recette.nom.toLowerCase().includes(this.searchKey.toLowerCase());
-            }))))  
-        },
+    listeRecettesFiltree: function(){
+        return this.filtreParRegime((this.filtreParCategorie(this.listeRecettes.filter((recette) => {
+            return recette.nom.toLowerCase().includes(this.searchKey.toLowerCase());
+        }))))  
+    },
   },
 
 }
