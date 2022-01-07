@@ -1,10 +1,10 @@
 export default{
     // Serveur fournisseur de données - back-end
-    host : /*'http://localhost/delisansucre/wp-json/wp/v2/'*//*'https://administration.delisansucre.luciepetit.fr/wp-json/wp/v2/'*/'https://administration.recette-diabetique.com/wp-json/wp/v2/',
+    host : 'https://administration.recette-diabetique.com/wp-json/wp/v2/',
     //Routes specifiques
-    hostSpecific : /*'http://localhost/delisansucre/wp-json/recette/v1/'*//*'https://administration.delisansucre.luciepetit.fr/wp-json/recette/v1/'*/'https://administration.recette-diabetique.com/wp-json/recette/v1/',
+    hostSpecific : 'https://administration.recette-diabetique.com/wp-json/recette/v1/',
     // Authentification JWT Wordpress
-    auth: /*'http://localhost/delisansucre/wp-json/jwt-auth/v1/'*//*'https://administration.delisansucre.luciepetit.fr/wp-json/jwt-auth/v1/'*/'https://administration.recette-diabetique.com/wp-jsonjwt-auth/v1/',
+    auth: 'https://administration.recette-diabetique.com/wp-jsonjwt-auth/v1/',
     user: 'abonne',
     psw: 'abonne',
 
