@@ -2,10 +2,10 @@
   <div id="app" class="bg-white relative">
 <!--Menu navigation-->
     <header id="menu" class="relative z-50">
-        <div class="laptop:flex flex-col laptop:flex-row laptop:justify-center w-full left-0 top-0 fixed laptop:bg-primary">
+        <div class="laptop:flex flex-col laptop:flex-row laptop:justify-center w-full left-0 top-0 fixed laptop:bg-secondary">
             <div class="flex flex-col w-full laptop:w-10/12 laptop:h-20 laptop:flex-row laptop:justify-between laptop:items-center text-gray-700 bg-white" x-data="{ open: false }"  :class="{'h-screen': open, 'h-auto': !open}">
               
-              <div class="flex-shrink-0 px-8 py-2 flex flex-row items-center justify-between bg-primary laptop:h-full">
+              <div class="flex-shrink-0 px-8 py-2 flex flex-row items-center justify-between bg-secondary laptop:h-full">
                 <router-link to="/" class="tracking-widest"><span @click="recherche=false, open=false"><img src="./assets/logo_noir.svg" alt="logo" class="w-16 fill"></span></router-link>
                 <button class="rounded-laptop laptop:hidden rounded-laptop focus:outline-none focus:shadow-outline" @click="open = !open">
                   <svg viewBox="0 0 20 20" class="w-6 h-6 fill-dark">
@@ -15,15 +15,15 @@
                 </button>
               </div>
     
-              <nav :class="{'block': open, 'hidden': !open}" class="flex flex-col flex-grow bg-primary laptop:flex laptop:flex-row laptop:h-full laptop:justify-evenly laptop:items-center laptop:w-full">
+              <nav :class="{'block': open, 'hidden': !open}" class="flex flex-col flex-grow bg-secondary laptop:flex laptop:flex-row laptop:h-full laptop:justify-evenly laptop:items-center laptop:w-full">
                 
                 <div :class="{'h-auto mb-0': !open_categories, 'h-fit mb-6 laptop:mb-0': open_categories}">
                   <button @click="open_categories = !open_categories" class="py-6 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
-                    <span class="text-xl" >Catégories</span>
+                    <span class="text-xl text-black">Catégories</span>
                     <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_categories, 'rotate-0': !open_categories}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                   </button>
                   
-                  <div :class="{'hidden': !open_categories, 'laptop:important-block': open_categories}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
+                  <div :class="{'hidden': !open_categories, 'contents laptop:important-block': open_categories}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
                     <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
                         <li v-if="categorie.regime" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><div @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</div></router-link></li>
                     </ul>
@@ -31,11 +31,11 @@
                 </div>
                 <div :class="{'h-auto mb-0': !open_meals, 'h-fit mb-6 laptop:mb-0': open_meals}">
                   <button @click="open_meals = !open_meals" class="py-6 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
-                    <span class="text-xl" >Repas</span>
+                    <span class="text-xl text-black">Repas</span>
                     <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_meals, 'rotate-0': !open_meals}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                   </button>
                   
-                  <div :class="{'hidden': !open_meals, 'laptop:important-block': open_meals}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
+                  <div :class="{'hidden': !open_meals, 'contents laptop:important-block': open_meals}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
                     <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
                         <li v-if="categorie.repas" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><span @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</span></router-link></li>
                     </ul>
@@ -43,21 +43,22 @@
                 </div>
                 <div :class="{'h-auto mb-0': !open_plates, 'h-fit mb-6 laptop:mb-0': open_plates}">
                   <button @click="open_plates = !open_plates" class="py-6 border-t-2 border-white uppercase pl-8 flex flex-row w-full bg-transparent laptop:w-auto laptop:inline laptop:pl-0 laptop:border-none">
-                    <span class="text-xl" >Plats</span>
+                    <span class="text-xl text-black">Plats</span>
                     <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open_plates, 'rotate-0': !open_plates}" class="fill-black inline w-8 h-8 transition-transform duration-200 transform "><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                   </button>
                   
-                  <div :class="{'hidden': !open_plates, 'laptop:important-block': open_plates}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
+                  <div :class="{'hidden': !open_plates, 'contents laptop:important-block': open_plates}" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="w-full absolute laptop:w-auto laptop:bg-white laptop:text-center laptop:px-8 laptop:py-4">
                     <ul v-for="categorie in listeCategories" :key="categorie.id" class="w-screen laptop:w-auto laptop:text-center">
                         <li v-if="categorie.plat" class="pl-8 py-1 laptop:px-0"><router-link :to="{name: 'Categorie', params: {id:categorie.id}}"><span @click="recherche=false, open=false, open_recettes=false">{{categorie.nom}}</span></router-link></li>
                     </ul>
                   </div>
                 </div>
 
-                <router-link to="/Articles" class="text-xl border-t-2 border-white py-6 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span @click="recherche=false, open=false">Article</span></router-link>
+                <router-link to="/Articles" class="text-black text-xl border-t-2 border-white py-6 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span class="text-black" @click="recherche=false, open=false">Article</span></router-link>
+                <router-link to="/Contact" class="text-black text-xl border-t-2 border-white py-6 uppercase pl-8 laptop:px-4 laptop:border-none laptop:py-0"><span class="text-black" @click="recherche=false, open=false">Contact</span></router-link>
               </nav>
-              <form :class="{'hidden': open, 'flex': !open}" class="mx-auto my-4 w-9/12  laptop:bg-primary laptop:h-full laptop:w-5/12 laptop:flex laptop:m-0 laptop:py-4">
-                <div class="flex w-full bg-white border-primary border-2 rounded-full px-4 py-2 text-dark">
+              <form :class="{'hidden': open, 'flex': !open}" class="mx-auto my-4 w-9/12  laptop:bg-secondary laptop:h-full laptop:w-5/12 laptop:flex laptop:m-0 laptop:py-4">
+                <div class="flex w-full bg-white border-dark border-2 rounded-full px-4 py-2 text-dark">
                     <input v-model="searchKey" type="search" id="search" class="w-full h-full bg-white border-none" placeholder="Rechercher une recette">
                     <button @click="recherche = true"><i class="fas fa-search fa-lg cursor-pointer"></i></button>
                 </div>
@@ -97,10 +98,7 @@
             </div>
         </div>
         <div v-if="listeRecettesFiltree.length == []" class="flex items-center flex-col">
-            <p class="my-6 text-center text-lg"><span class="text-dark font-bold">Oups, cette recette n'existe pas encore...</span> Proposez les votre dès maintenant !</p>
-            <span class="flex">
-                <router-link to="/CreationRecette" class="btn-primary">Proposez votre recette !</router-link>
-            </span>
+            <p class="my-6 text-center text-lg text-dark font-bold">Oups, cette recette n'existe pas encore...</p>
         </div>
     </section>
     <router-view v-show="recherche==false" :key="$route.fullPath"/>

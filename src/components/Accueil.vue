@@ -25,9 +25,9 @@
 
             <div class="recepeSlider relative overflow-hidden">
                 <div class="swiper-wrapper">
-                    <div v-for="recette in listeRecettes" :key="recette.id" class="swiper-slide relative px-1 h-96 w-9/12 mobil:w-60 mobil:px-2">
+                    <div v-for="(recette, index) in listeRecettes" :key="recette.id" v-if="index <=9" class="swiper-slide relative px-1 h-96 w-9/12 mobil:w-60 mobil:px-2">
                         <router-link :to="{name: 'Recette', params: {id:recette.id}}">
-                                <div class="flex justify-center overflow-hidden">
+                                <div class="flex justify-center overflow-hidden h-full">
                                     <img :src="recette.urlImage" alt="" class="h-full max-w-none">
                                 </div>
                                 <div class="flex flex-col bg-white text-dark p-2 font-fira font-black w-4/5 h-24 absolute bottom-6 items-center justify-center mobil:w-50">
@@ -50,9 +50,9 @@
                 <router-link to="/Categories" class="text-center uppercase font-overpass text-dark">Voir toutes les catégories</router-link>
                 <i class="fas fa-arrow-right pl-2"></i>
             </span>
-    
+
             <div class="grid grid-cols-2 gap-4 mx-auto laptop:w-10/12 laptop:grid-cols-3">
-                <div v-for="categorie in listeCategories" :key="categorie.id">
+                <div v-for="(categorie, index) in listeCategories" :key="categorie.id" v-if="index <=5">
                     <router-link :to="{name: 'Categorie', params: {id:categorie.id}}" class="flex flex-col items-center">
                         <div class="relative">
                             <span class="m-4 block rounded-full overflow-hidden h-32 w-32 tablet:h-60 tablet:w-60">
@@ -60,7 +60,7 @@
                             </span>
                             <img v-if="categorie && categorie.urlIcone" :src="categorie.urlIcone" :alt="categorie.nom" class="absolute right-0 bottom-0 w-14 h-14 tablet:w-20 tablet:h-20">
                         </div>
-                        <h3 class="text-center font-fira font-bold uppercase">{{categorie.nom}}</h3>    
+                        <h3 class="text-center font-fira font-bold uppercase">{{categorie.nom}}</h3>
                     </router-link>
                 </div>
             </div>
@@ -70,26 +70,15 @@
             <div class="laptop:flex">
                 <div>
                     <p class="font-overpass font-light p-4">DéliSanSucre vous propose des recettes adaptées à votre régime alimentaire. Vous trouverez des recettes sans sucre, sans gluten, sans lactose, sans sel, végétariennes et véganes. Tout ce qu’il vous faut pour ravir vos papilles et celles de vos invité.</p>
-                    <p class="font-overpass font-light p-4">Suivre un régime particulier ce n’est pas toujours simple. Ce site est à l’initiative de l’association Indiglu, qui souhaite aider les personnes souffrant de diabète. Son but est d’aider ces personnes à diversifier leur alimentation tout en régulant facilement leur glycémie. Nous offrons donc aux personnes diabétiques un site regroupant des recettes avec un taux de sucre faible. Mais surtout, un taux d’insuline clairement indiqué. Ils n’auront qu’à regarder la recette pour savoir ce qu’il faut pour la contrebalancer.</p>        
+                    <p class="font-overpass font-light p-4">Suivre un régime particulier ce n’est pas toujours simple. Ce site est à l’initiative de l’association Indiglu, qui souhaite aider les personnes souffrant de diabète. Son but est d’aider ces personnes à diversifier leur alimentation tout en régulant facilement leur glycémie. Nous offrons donc aux personnes diabétiques un site regroupant des recettes avec un taux de sucre faible. Mais surtout, un taux d’insuline clairement indiqué. Ils n’auront qu’à regarder la recette pour savoir ce qu’il faut pour la contrebalancer.</p>
                 </div>
                 <div>
                     <p class="font-overpass font-light p-4">Nous souhaitons ouvrir cette facilité à toutes les personnes qui ont un régime alimentaire spécifique. C’est pourquoi vous y retrouverez des recettes sans lactose, sans gluten et sans sel pour les intolérances. Des recettes végétariennes et véganes pour ceux qui ne mangent pas de viande ou de produits animaux. Mais également tout un panel de filtre d'allergènes. Il n’est pas toujours simple de trouver une recette quand on est allergique. Surtout si ça touche des aliments courants. Avec DéliSanSucre, vous n’aurez qu’à cliquer sur un filtre. Toutes les recettes qui ne vous conviennent pas sont automatiquement retirées des résultats. Sans prise de tête, mais pas sans plaisir.</p>
-                    <p class="font-overpass font-light p-4">Si vous pensez qu’il manque des allergènes ou des régimes alimentaires, n’hésitez pas à nous contacter. Et si vous voulez partager vos meilleures recettes avec la communauté, vous pouvez nous les proposer ici. </p>        
+                    <p class="font-overpass font-light p-4">Si vous pensez qu’il manque des allergènes ou des régimes alimentaires, n’hésitez pas à nous contacter. Et si vous voulez partager vos meilleures recettes avec la communauté, vous pouvez nous les proposer ici. </p>
                 </div>
             </div>
-        </section>    
+        </section>
     </main>
-    <section id="newsletter" class="bg-primary px-8 py-4 flex flex-col items-center desktop:w-10/12 m-auto">
-        <h3 class="font-fira font-black text-black uppercase text-l text-center">Recevez des recettes adaptées directement dans votre boîte mail</h3>
-        <p class="font-overpass font-regular my-4">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam, quis.</p>
-        <form action="/leads-subscribing-newsletter" method="post">
-                <label for="email" class="font-overpass font-thin">Votre adresse e-mail :</label>
-            <div class="flex ">
-                <input id="email" name="subscriber_email" type="email"/>
-                <button type="submit" class="font-fira bg-dark text-white px-8 py-2">S'abonner</button>
-            </div>
-        </form>
-    </section>
   </div>
 </template>
 
@@ -132,7 +121,7 @@ export default {
   mounted() {
        //slider showcase
         var swiper = new Swiper(".showcaseSlider", {
-            observer: true, 
+            observer: true,
             observeParents: true,
             slidesPerView: "auto",
             centeredSlides: true,
@@ -159,9 +148,9 @@ export default {
             },
         });
   },
-  
+
 }
-        
+
 </script>
 
 <style scoped>

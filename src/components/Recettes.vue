@@ -18,13 +18,15 @@
                 <div class="grid_custom">
                     <div v-for="recette in listeRecettesFiltree" :key="recette.id" class="w-full relative shadow-lg">
                         <router-link :to="{name: 'Recette', params: {id:recette.id}}" class="relative">
-                            <img :src="recette.urlImage" alt="" class="w-full h-80">
+                            <div class="flex justify-center items-center overflow-hidden h-80 w-full">
+                              <img :src="recette.urlImage" alt="" class="w-full h-fit">
+                            </div>
                             <div class="w-full text-center bg-white py-4 px-8">
                               <h3 class="font-fira font-black text-dark">{{recette.nom}}</h3>
                               <div class="flex justify-evenly">
                                   <img v-for="categorie in recette.categorie" :key="categorie.id" v-if="categorie.regime" :src="categorie.urlIcone" alt="" class="w-8 h-8">
                               </div>
-                            </div>  
+                            </div>
                         </router-link>
                     </div>
                 </div>
@@ -102,11 +104,11 @@ export default {
   },
   computed:{
     listeRecettesFiltree: function(){
-        return this.filtreParRegime((this.filtreParCategorie(this.listeRecettes)))  
+        return this.filtreParRegime((this.filtreParCategorie(this.listeRecettes)))
     },
   },
 }
-        
+
 </script>
 
 <style scoped>

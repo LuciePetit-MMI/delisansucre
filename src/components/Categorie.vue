@@ -17,18 +17,17 @@
               <div class="grid_custom">
                   <div v-for="recette in categorie.recette" :key="recette.id" class="w-full shadow-lg">
                       <router-link :to="{name: 'Recette', params: {id:recette.id}}">
-                          <img :src="recette.urlImage" alt="" class="w-full h-80">
-                          <h3 class="w-full text-center font-fira font-blacl text-dark bg-white py-4 px-8">{{recette.nom}}</h3>    
+                          <div class="flex justify-center items-center overflow-hidden h-80 w-full">
+                            <img :src="recette.urlImage" alt="" class="w-full h-fit">
+                          </div>
+                          <h3 class="w-full text-center font-fira font-blacl text-dark bg-white py-4 px-8">{{recette.nom}}</h3>
                       </router-link>
                   </div>
               </div>
               <div v-if="categorie.recette.length == []" class="flex items-center flex-col">
-                  <p class="my-6 text-center text-lg"><span class="text-dark font-bold">Oups, pas encore de recette dans cette catégorie...</span> Proposez les votre dès maintenant !</p>
-                  <span class="flex">
-                      <router-link to="/CreationRecette" class="btn-primary">Proposez votre recette !</router-link>
-                  </span>
+                  <p class="my-6 text-center text-lg text-dark font-bold">Oups, pas encore de recette dans cette catégorie...<</p>
               </div>
-          </section>    
+          </section>
       </main>
     </div>
 </template>
@@ -52,7 +51,7 @@ export default {
     })
   },
 }
-        
+
 </script>
 
 <style scoped>

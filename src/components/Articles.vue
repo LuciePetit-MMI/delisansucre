@@ -7,8 +7,10 @@
               <div v-for="article in listeArticles" :key="article.id">
                 <div class="w-full shadow-lg">
                     <router-link :to="{name: 'Article', params: {id:article.id}}">
-                        <img :src="article.urlImage" :alt="article.titre" class="w-full h-80">
-                        <h3 class="w-full text-center font-fira font-black text-dark bg-white py-4 px-8">{{article.titre}}</h3>    
+                        <div class="flex justify-center overflow-hidden h-full">
+                          <img :src="recette.urlImage" alt="" class="h-full max-w-none">
+                        </div>
+                        <h3 class="w-full text-center font-fira font-black text-dark bg-white py-4 px-8">{{article.titre}}</h3>
                     </router-link>
                 </div>
               </div>
@@ -37,7 +39,7 @@ export default {
       .catch(error => console.log(error))
   },
 }
-        
+
 </script>
 
 <style scoped>

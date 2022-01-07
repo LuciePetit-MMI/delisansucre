@@ -7,7 +7,7 @@
                 <div class="w-full h-60 laptop:h-80 overflow-hidden flex justify-center align-center">
                     <img :src="recette.urlImage" alt="image recette" class="w-full h-fit">
                 </div>
-                <p class="px-8 py-4 bg-white font-overpass font-regular">{{recette.description}}</p>
+                <p class="px-8 py-4 bg-light font-overpass font-regular">{{recette.description}}</p>
             </div>
         </section>
         <section id="infos" class="mt-4 mb-8">
